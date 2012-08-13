@@ -1,1 +1,1 @@
-Links between ZfcUser and SpeckAddress
+Extends SpeckAddress to work with ZfcUser

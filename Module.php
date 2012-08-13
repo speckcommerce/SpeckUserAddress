@@ -14,6 +14,7 @@ class Module implements AutoloaderProviderInterface
                 'SpeckUserAddress\Service\UserAddress' => function($sm) {
                     $service = new Service\UserAddress;
                     $service->setMapper($sm->get('SpeckUserAddress\Mapper\UserAddressMapper'));
+                    $service->setUserService($sm->get('zfcuser_user_service'));
                     return $service;
                 },
 
@@ -44,11 +45,5 @@ class Module implements AutoloaderProviderInterface
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
-    }
-
-    public function onBootstrap($e)
-    {
-        $sm = $e->getApplication()->getServiceManager();
-        $service = $sm->get('SpeckUserAddress\Service\UserAddress')->attachDefaultListeners();
     }
 }
