@@ -49,7 +49,7 @@ class UserAddressController extends AbstractActionController
         }
 
         $this->getUserAddressService()->create($prg);
-        return $this->redirect()->toRoute('zfcuser/address');
+        return $this->redirect()->toRoute($this->getOptions()->getIndexRoute());
     }
 
     public function editAction()
@@ -76,7 +76,7 @@ class UserAddressController extends AbstractActionController
         }
 
         $this->getUserAddressService()->update($prg);
-        return $this->redirect()->toRoute('zfcuser/address');
+        return $this->redirect()->toRoute($this->getOptions()->getIndexRoute());
     }
 
     public function deleteAction()
@@ -84,7 +84,7 @@ class UserAddressController extends AbstractActionController
         $addressId = $this->getRequest()->getQuery()->get('id');
 
         $this->getUserAddressService()->delete($addressId);
-        return $this->redirect()->toRoute('zfcuser/address');
+        return $this->redirect()->toRoute($this->getOptions()->getIndexRoute());
     }
 
     public function getAddForm()
@@ -122,6 +122,10 @@ class UserAddressController extends AbstractActionController
 
     public function getOptions()
     {
+        if (!isset($this->options)) {
+            $this->options = $this->getServiceLocator()->get('SpeckUserAddress\Options\ModuleOptions');
+        }
+
         return $this->options;
     }
 

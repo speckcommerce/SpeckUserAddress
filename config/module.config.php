@@ -1,6 +1,10 @@
 <?php
 
 return array(
+    'speckuseraddress' => array(
+        'indexRoute' => 'zfcuser/address',
+    ),
+
     'service_manager' => array(
         'aliases' => array(
             'speckuseraddress_db_adapter' => 'Zend\Db\Adapter\Adapter'

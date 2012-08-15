@@ -23,6 +23,18 @@ class Module implements AutoloaderProviderInterface
                     $mapper->setDbAdapter($sm->get('speckuseraddress_db_adapter'));
                     return $mapper;
                 },
+
+                'SpeckUserAddress\Options\ModuleOptions' => function($sm) {
+                    $config = $sm->get('Configuration');
+
+                    if (isset($config['speckuseraddress'])) {
+                        $moduleConfig = $config['speckuseraddress'];
+                    } else {
+                        $moduleConfig = array();
+                    }
+
+                    return new Options\ModuleOptions($moduleConfig);
+                },
             ),
         );
     }
