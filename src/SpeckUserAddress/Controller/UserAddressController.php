@@ -15,11 +15,23 @@ class UserAddressController extends AbstractActionController
     {
         $addresses = $this->getUserAddressService()->getAddresses();
 
+        $statuses = array();
+        $namespaces = array('addr-add', 'addr-edit', 'addr-delete');
+        foreach ($namespaces as $ns) {
+            $fm = $this->flashMessenger()->setNamespace($ns)->getMessages();
+            if (isset($fm[0])) {
+                $statuses[$ns] = $fm[0];
+            } else {
+                $statuses[$ns] = null;
+            }
+        }
+
         $vm = new ViewModel(array(
-            'addresses' => $addresses,
-            'editRoute' => 'zfcuser/address/edit/query',
+            'statuses'    => $statuses,
+            'addresses'   => $addresses,
+            'editRoute'   => 'zfcuser/address/edit/query',
             'deleteRoute' => 'zfcuser/address/delete/query',
-            'addRoute' => 'zfcuser/address/add',
+            'addRoute'    => 'zfcuser/address/add',
         ));
 
         $vm->setTemplate('speck-address/address/index');
@@ -49,6 +61,7 @@ class UserAddressController extends AbstractActionController
         }
 
         $this->getUserAddressService()->create($prg);
+        $this->flashMessenger()->setNamespace('addr-add')->addMessage(true);
         return $this->redirect()->toRoute($this->getOptions()->getIndexRoute());
     }
 
@@ -76,6 +89,7 @@ class UserAddressController extends AbstractActionController
         }
 
         $this->getUserAddressService()->update($prg);
+        $this->flashMessenger()->setNamespace('addr-edit')->addMessage(true);
         return $this->redirect()->toRoute($this->getOptions()->getIndexRoute());
     }
 
@@ -84,6 +98,7 @@ class UserAddressController extends AbstractActionController
         $addressId = $this->getRequest()->getQuery()->get('id');
 
         $this->getUserAddressService()->delete($addressId);
+        $this->flashMessenger()->setNamespace('addr-delete')->addMessage(true);
         return $this->redirect()->toRoute($this->getOptions()->getIndexRoute());
     }
 
