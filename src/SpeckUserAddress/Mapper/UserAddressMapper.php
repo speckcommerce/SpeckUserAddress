@@ -22,7 +22,7 @@ class UserAddressMapper extends AddressMapper
             ->join(array('a' => 'address'), 'ua.address_id = a.address_id')
             ->where($where);
 
-        return $this->selectWith($sql);
+        return $this->select($sql);
     }
 
     public function findByIdAndUser($addressId, $userId)
@@ -36,7 +36,7 @@ class UserAddressMapper extends AddressMapper
             ->join(array('a' => 'address'), 'ua.address_id = a.address_id')
             ->where($where);
 
-        return $this->selectWith($sql)->current();
+        return $this->select($sql)->current();
     }
 
     public function link($user_id, $address_id)
