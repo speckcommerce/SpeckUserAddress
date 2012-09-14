@@ -43,20 +43,22 @@ class UserAddress implements ServiceManagerAwareInterface
         return $this->mapper->findByIdAndUser($addressId, $userId);
     }
 
-    public function create($address)
+    public function create($address, $userId = null)
     {
         $authService = $this->getUserService()->getAuthService();
 
-        if (!$authService->hasIdentity()) {
-            throw new RuntimeException("No authorized user");
+        if ($userId == null) {
+            if (!$authService->hasIdentity()) {
+                throw new RuntimeException("No authorized user");
+            }
+
+            $userId = $authService->getIdentity()->getId();
         }
 
         if (is_array($address)) {
             $hydrator = new ClassMethods;
             $address = $hydrator->hydrate($address, new Address);
         }
-
-        $userId = $authService->getIdentity()->getId();
 
         $address = $this->mapper->persist($address);
         $addressId = $address->getAddressId();
