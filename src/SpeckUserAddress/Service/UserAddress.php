@@ -64,6 +64,7 @@ class UserAddress implements ServiceManagerAwareInterface
         $addressId = $address->getAddressId();
 
         $this->mapper->link($userId, $addressId);
+        return $address;
     }
 
     public function update($address)
@@ -78,6 +79,7 @@ class UserAddress implements ServiceManagerAwareInterface
         }
 
         $this->mapper->persist($address);
+        return $address;
     }
 
     public function delete($address)
