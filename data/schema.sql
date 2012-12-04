@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS `user_addresses` (
   PRIMARY KEY (`user_id`,`address_id`),
   KEY `user_id` (`user_id`),
   KEY `address_id` (`address_id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
