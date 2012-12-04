@@ -1,0 +1,21 @@
+{
+    "name": "speckcommerce/speck-user-address",
+    "description": "",
+    "type": "library",
+    "keywords": [
+        "zf2"
+    ],
+    "homepage": "http://github.com/speckcommerce/SpeckUserAddress",
+    "authors": [
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-0": {
+            "SpeckUserAddress": "src/"
+        },
+        "classmap": [
+            "./"
+        ]
+    }
+}
