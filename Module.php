@@ -15,12 +15,14 @@ class Module implements AutoloaderProviderInterface
                     $service = new Service\UserAddress;
                     $service->setMapper($sm->get('SpeckUserAddress\Mapper\UserAddressMapper'));
                     $service->setUserService($sm->get('zfcuser_user_service'));
+                    $service->setAddressPrototype($sm->get('speckaddress_entity_prototype'));
                     return $service;
                 },
 
                 'SpeckUserAddress\Mapper\UserAddressMapper' => function($sm) {
                     $mapper = new Mapper\UserAddressMapper;
                     $mapper->setDbAdapter($sm->get('speckuseraddress_db_adapter'));
+                    $mapper->setEntityPrototype($sm->get('speckaddress_entity_prototype'));
                     return $mapper;
                 },
 

@@ -4,7 +4,7 @@ namespace SpeckUserAddress\Service;
 
 use RuntimeException;
 
-use SpeckAddress\Entity\Address;
+use SpeckAddress\Entity\AddressInterface;
 use SpeckAddress\Service\AddressEvent;
 
 use Zend\ServiceManager\ServiceManager;
@@ -57,7 +57,7 @@ class UserAddress implements ServiceManagerAwareInterface
 
         if (is_array($address)) {
             $hydrator = new ClassMethods;
-            $address = $hydrator->hydrate($address, new Address);
+            $address = $hydrator->hydrate($address, $this->createAddress());
         }
 
         $address = $this->getMapper()->persist($address);
@@ -71,7 +71,7 @@ class UserAddress implements ServiceManagerAwareInterface
     {
         if (is_array($address)) {
             $hydrator = new ClassMethods;
-            $address = $hydrator->hydrate($address, new Address);
+            $address = $hydrator->hydrate($address, $this->createAddress());
         }
 
         if (!$this->findById($address->getAddressId())) {
@@ -84,7 +84,7 @@ class UserAddress implements ServiceManagerAwareInterface
 
     public function delete($address)
     {
-        if ($address instanceof Address) {
+        if ($address instanceof AddressInterface) {
             $address = $address->getAddressId();
         }
 
@@ -129,6 +129,17 @@ class UserAddress implements ServiceManagerAwareInterface
     public function setUserService($userService)
     {
         $this->userService = $userService;
+        return $this;
+    }
+
+    public function createAddress()
+    {
+        return clone $this->addressPrototype;
+    }
+
+    public function setAddressPrototype($prototype)
+    {
+        $this->addressPrototype = $prototype;
         return $this;
     }
 }
