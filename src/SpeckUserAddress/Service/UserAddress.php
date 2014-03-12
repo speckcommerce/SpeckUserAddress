@@ -101,7 +101,7 @@ class UserAddress implements ServiceManagerAwareInterface
         $userId = $authService->getIdentity()->getId();
 
         $this->mapper->unlink($userId, $address);
-        $this->mapper->delete($address);
+        $this->mapper->deleteAddress($address);
     }
 
     public function setServiceManager(ServiceManager $sm)
