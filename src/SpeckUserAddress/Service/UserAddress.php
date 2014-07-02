@@ -27,7 +27,7 @@ class UserAddress implements ServiceManagerAwareInterface
 
         $userId = $authService->getIdentity()->getId();
 
-        return $this->mapper->getUserAddresses($userId);
+        return $this->getMapper()->getUserAddresses($userId);
     }
 
     public function findById($addressId)
@@ -40,7 +40,7 @@ class UserAddress implements ServiceManagerAwareInterface
 
         $userId = $authService->getIdentity()->getId();
 
-        return $this->mapper->findByIdAndUser($addressId, $userId);
+        return $this->getMapper()->findByIdAndUser($addressId, $userId);
     }
 
     public function create($address, $userId = null)
@@ -60,10 +60,10 @@ class UserAddress implements ServiceManagerAwareInterface
             $address = $hydrator->hydrate($address, new Address);
         }
 
-        $address = $this->mapper->persist($address);
+        $address = $this->getMapper()->persist($address);
         $addressId = $address->getAddressId();
 
-        $this->mapper->link($userId, $addressId);
+        $this->getMapper()->link($userId, $addressId);
         return $address;
     }
 
@@ -78,7 +78,7 @@ class UserAddress implements ServiceManagerAwareInterface
             throw new RuntimeException('Could not update address');
         }
 
-        $this->mapper->persist($address);
+        $this->getMapper()->persist($address);
         return $address;
     }
 
@@ -100,8 +100,8 @@ class UserAddress implements ServiceManagerAwareInterface
 
         $userId = $authService->getIdentity()->getId();
 
-        $this->mapper->unlink($userId, $address);
-        $this->mapper->deleteAddress($address);
+        $this->getMapper()->unlink($userId, $address);
+        $this->getMapper()->deleteAddress($address);
     }
 
     public function setServiceManager(ServiceManager $sm)
